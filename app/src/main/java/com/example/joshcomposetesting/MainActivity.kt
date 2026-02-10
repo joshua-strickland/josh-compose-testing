@@ -19,8 +19,11 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.semantics.testTagsAsResourceId
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -84,13 +87,15 @@ fun AppNavigation() {
 /**
  * The main screen of the application, featuring four buttons for navigation.
  */
-@OptIn(ExperimentalMaterial3Api::class)
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
 fun MainScreen(navController: NavController) {
     Scaffold(
         topBar = {
-            TopAppBar(title = { Text("Main Screen") })
-        }
+            TopAppBar(title = { Text("Main Screen") },
+                modifier = Modifier.testTag("home-screen-title"))
+        },
+        modifier = Modifier.semantics { testTagsAsResourceId = true }
     ) { paddingValues ->
         Column(
             modifier = Modifier
